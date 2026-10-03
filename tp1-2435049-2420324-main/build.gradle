@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+
+    id "me.champeau.jmh" version "0.7.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+    jmh 'org.openjdk.jmh:jmh-core:1.36'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
+    jmhAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jmh {
+    resultFormat = 'CSV'
+    fork = 1
+    timeOnIteration = '2s'
+    warmup = '500ms'
+    timeUnit = 'ms'
+    resultsFile = project.file("${project.buildDir}/reports/jmh/results.txt")
+}
